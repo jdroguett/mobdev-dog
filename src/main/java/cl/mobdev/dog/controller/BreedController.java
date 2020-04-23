@@ -21,18 +21,13 @@ public class BreedController {
 	@Autowired
 	private ConfigUsecase configUsecase;
 
-	@GetMapping(value = "/healthcheck", produces = "application/json; charset=utf-8")
-	public String getHealthCheck() {
-		return "{ \"isWorking\" : true }";
-	}
-
 	@GetMapping("/breeds")
 	public List<Breed> getBreeds() throws Exception {
 		return breedUsecase.getBreeds();
 	}
 
 	@GetMapping("/breeds/{breedName}")
-	public Breed getBreed(@PathVariable String breedName) {
+	public Breed getBreed(@PathVariable String breedName) throws Exception {
 		return breedUsecase.getBreed(breedName);
 	}
 	
@@ -47,7 +42,7 @@ public class BreedController {
 	 * @return
 	 */
 	@PostMapping("/breeds/config")
-	public ResponseEntity<?> addEmployee(@RequestBody Config config) {
+	public ResponseEntity<?> setConfig(@RequestBody Config config) {
 		configUsecase.setConfigUrl(config.getUrl());
 		return new ResponseEntity<>("Config Ok", HttpStatus.OK);
 	}
