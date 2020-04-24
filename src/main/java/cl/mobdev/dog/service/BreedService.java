@@ -18,37 +18,33 @@ import org.springframework.web.util.UriComponentsBuilder;
 @PropertySource(ignoreResourceNotFound = true, value = "classpath:application.properties")
 @Service
 public class BreedService {
-	
+
 	@Value("${urlDog}")
-    private String url;
-	
+	private String url;
+
 	@Autowired
 	private RestTemplate restTemplate;
 
 	/**
 	 * Retorna el listado de todas las razas
+	 * 
 	 * @return
 	 */
 	public List<String> getAllBreeds() {
 		HttpHeaders requestHeaders = new HttpHeaders();
 		requestHeaders.set("Accept", "application/json");
-		
+
 		String url = buildUrl("/api/breeds/list/all");
 
 		HttpEntity<?> httpEntity = new HttpEntity<Object>(requestHeaders);
 
-		try {
-			HttpEntity<String> response = restTemplate
-					.exchange(url, HttpMethod.GET, httpEntity, String.class);
-			return bodyToBreedsList(response.getBody());
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		HttpEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+		return bodyToBreedsList(response.getBody());
 	}
 
 	/**
 	 * Retona el listado de todas las imagenes de la raza
+	 * 
 	 * @param breed
 	 * @return
 	 */
@@ -60,42 +56,31 @@ public class BreedService {
 
 		HttpEntity<?> httpEntity = new HttpEntity<Object>(requestHeaders);
 
-		try {
-			HttpEntity<String> response = restTemplate
-					.exchange(url, HttpMethod.GET, httpEntity, String.class);			
-			return bodyToImagesList(response.getBody());
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		HttpEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+		return bodyToImagesList(response.getBody());
+
 	}
-	
+
 	/**
 	 * Retona el listado de sub razas de la raza
+	 * 
 	 * @param breed
 	 * @return
 	 */
 	public List<String> getSubBreedsByBreed(String breed) {
-		
+
 		HttpHeaders requestHeaders = new HttpHeaders();
 		requestHeaders.set("Accept", "application/json");
 
 		String url = buildUrl("/api/breed/" + breed + "/list");
 
-
 		HttpEntity<?> httpEntity = new HttpEntity<Object>(requestHeaders);
 
-		try {
-			HttpEntity<String> response = restTemplate
-					.exchange(url, HttpMethod.GET, httpEntity, String.class);
-			return bodyToSubBreedsList(response.getBody());
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		HttpEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, httpEntity, String.class);
+		return bodyToSubBreedsList(response.getBody());
+
 	}
 
-	
 	private List<String> bodyToBreedsList(String body) {
 		List<String> list = new ArrayList<>();
 		JSONObject json = new JSONObject(body);
@@ -107,35 +92,34 @@ public class BreedService {
 		}
 		return list;
 	}
-	
+
 	private List<String> bodyToImagesList(String body) {
 		List<String> list = new ArrayList<>();
-		JSONObject json = new JSONObject(body);		
+		JSONObject json = new JSONObject(body);
 		JSONArray arr = json.getJSONArray("message");
-	    for (int i = 0; i < arr.length(); i++) {
-	        list.add(arr.getString(i));
-	    }
-	    return list;
+		for (int i = 0; i < arr.length(); i++) {
+			list.add(arr.getString(i));
+		}
+		return list;
 	}
-	
+
 	private List<String> bodyToSubBreedsList(String body) {
 		List<String> list = new ArrayList<>();
-		JSONObject json = new JSONObject(body);		
+		JSONObject json = new JSONObject(body);
 		JSONArray arr = json.getJSONArray("message");
-	    for (int i = 0; i < arr.length(); i++) {
-	        list.add(arr.getString(i));
-	    }
-	    return list;
+		for (int i = 0; i < arr.length(); i++) {
+			list.add(arr.getString(i));
+		}
+		return list;
 	}
-	
+
 	private String getUrl() {
-		String urlNew = System.getProperty("urlDog");	
+		String urlNew = System.getProperty("urlDog");
 		return urlNew != null ? urlNew : url;
 	}
-	
+
 	private String buildUrl(String path) {
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(getUrl())
-				.path(path);
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(getUrl()).path(path);
 		return builder.toUriString();
 	}
 

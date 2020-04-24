@@ -17,12 +17,12 @@ public class BreedController {
 
 	@Autowired
 	private BreedUsecase breedUsecase;
-	
+
 	@Autowired
 	private ConfigUsecase configUsecase;
 
 	@GetMapping("/breeds")
-	public List<Breed> getBreeds() throws Exception {
+	public List<Breed> getBreeds() {
 		return breedUsecase.getBreeds();
 	}
 
@@ -30,14 +30,11 @@ public class BreedController {
 	public Breed getBreed(@PathVariable String breedName) throws Exception {
 		return breedUsecase.getBreed(breedName);
 	}
-	
+
 	/**
-	  
-  curl --header "Content-Type: application/json" \
-  --request POST \
-  --data '{"url":"https://dog.ceo"}' \
-  http://localhost:8080/breeds/config
-	
+	 * curl --header "Content-Type: application/json" --request POST --data
+	 * '{"url":"https://dog.ceo"}' \ http://localhost:8080/breeds/config
+	 * 
 	 * @param config
 	 * @return
 	 */
