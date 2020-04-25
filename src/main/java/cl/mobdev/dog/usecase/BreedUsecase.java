@@ -7,19 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import cl.mobdev.dog.iservice.IBreedService;
 import cl.mobdev.dog.model.Breed;
-import cl.mobdev.dog.service.BreedService;
 
 @Service
 public class BreedUsecase {
 	@Autowired
-	private BreedService service;
+	private IBreedService service;
 	
 	@Value("${urlEndpoint}")
     private String urlEndpoint;
 	
 	
-	public BreedUsecase(BreedService service) {
+	public BreedUsecase(IBreedService service) {
 		super();
 		this.service = service;
 	}

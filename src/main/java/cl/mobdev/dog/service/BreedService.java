@@ -15,9 +15,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import cl.mobdev.dog.iservice.IBreedService;
+
 @PropertySource(ignoreResourceNotFound = true, value = "classpath:application.properties")
 @Service
-public class BreedService {
+public class BreedService implements IBreedService {
 
 	@Value("${urlDog}")
 	private String url;
@@ -30,6 +32,7 @@ public class BreedService {
 	 * 
 	 * @return
 	 */
+	@Override
 	public List<String> getAllBreeds() {
 		HttpHeaders requestHeaders = new HttpHeaders();
 		requestHeaders.set("Accept", "application/json");
@@ -48,6 +51,7 @@ public class BreedService {
 	 * @param breed
 	 * @return
 	 */
+	@Override
 	public List<String> getImagesByBreed(String breed) {
 		HttpHeaders requestHeaders = new HttpHeaders();
 		requestHeaders.set("Accept", "application/json");
@@ -67,6 +71,7 @@ public class BreedService {
 	 * @param breed
 	 * @return
 	 */
+	@Override
 	public List<String> getSubBreedsByBreed(String breed) {
 
 		HttpHeaders requestHeaders = new HttpHeaders();

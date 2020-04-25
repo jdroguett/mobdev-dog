@@ -14,15 +14,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import cl.mobdev.dog.iservice.IBreedService;
 import cl.mobdev.dog.model.Breed;
-import cl.mobdev.dog.service.BreedService;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
 public class BreedUsecaseTests {
 		
 	@Mock
-	private BreedService breedService;
+	private IBreedService breedService;
 	
 	@Autowired
 	private BreedUsecase usecase;

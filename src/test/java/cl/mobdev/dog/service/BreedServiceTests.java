@@ -8,10 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import cl.mobdev.dog.iservice.IBreedService;
+
 @SpringBootTest
 class BreedServiceTests extends BaseTest{
 	@Autowired
-	private BreedService service;
+	private IBreedService service;
 	
 	@BeforeEach
 	void setUrlTest() {
